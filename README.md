@@ -25,13 +25,14 @@ Este projeto serve como um espaço de estudo guiado para:
 │   ├── main.py
 │   ├── pyproject.toml
 │   └── uv.lock
-├── tasks_explore_format_data.ipynb
+├── notebooks/
+│   └── tasks_explore_format_data.ipynb
 └── README.md
 ```
 
 ## Notebooks
 
-### `tasks_explore_format_data.ipynb`
+### `notebooks/tasks_explore_format_data.ipynb`
 
 Notebook voltado para os primeiros passos ao receber uma nova base de dados.
 
@@ -62,15 +63,29 @@ O projeto utiliza:
 - Python 3.12.1
 - uv
 - Pandas
+- nbstripout
 
 As configurações do ambiente ficam na pasta `setup/`.
 
-Para preparar o ambiente, acesse:
+## Primeiros passos
+
+Para preparar o ambiente, acesse a pasta `setup/` e sincronize as dependências:
 
 ```powershell
 cd setup
 uv sync
 ```
+
+Depois, volte para a raiz do repositório e instale o filtro local do `nbstripout`:
+
+```powershell
+cd ..
+uv --project setup run nbstripout --install
+```
+
+Esse filtro remove automaticamente outputs, contadores de execução e metadados voláteis dos notebooks quando eles são adicionados ao Git. Assim, os commits ficam focados no código e nas explicações das células.
+
+Esse passo precisa ser feito uma vez por clone local do repositório.
 
 Para mais detalhes, consulte o arquivo [setup/README.md](setup/README.md).
 
