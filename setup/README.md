@@ -16,52 +16,55 @@ python --version
 uv --version
 ```
 
-## Criar o ambiente virtual
+## Criação do ambiente virtual e instalação
 
-Entre na pasta `setup`:
+Com o `uv`, a criação da `.venv` e a instalação de todas as dependências declaradas no `pyproject.toml` ocorrem em uma única etapa:
 
 ```powershell
 cd setup
+uv sync
 ```
 
-Crie o ambiente virtual `.venv`:
+O `uv` identificará a versão do Python fixada em `.python-version` (3.12.1), criará a pasta `.venv/` e instalará:
+
+- **pandas** e **pyarrow**: bibliotecas principais para manipulação de dados tabulares.
+- **ipykernel**: suporte para execução dos Jupyter Notebooks.
+- **nbstripout**: ferramenta de limpeza de saídas de notebooks para commits limpos no Git.
+
+## Registro do Kernel para Jupyter Notebooks
+
+Para que qualquer editor (VS Code, Cursor, Antigravity) conecte os notebooks aos pacotes instalados nesta `.venv`, execute:
 
 ```powershell
-uv venv .venv
+uv run python -m ipykernel install --user --name project_tasks_pandas --display-name "Python (project_tasks_pandas)"
 ```
 
-Ative o ambiente no PowerShell:
+## Ativação manual (Opcional)
+
+Se preferir usar o terminal com o ambiente ativado tradicionalmente:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Caso o PowerShell bloqueie a ativação do ambiente, execute:
+Caso o PowerShell bloqueie a execução de scripts:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\.venv\Scripts\Activate.ps1
 ```
 
-## Instalar dependências
+## Gerenciamento de dependências
 
-Com o ambiente ativado, sincronize as dependências declaradas no `pyproject.toml`:
-
-```powershell
-uv sync
-```
-
-No estado atual, o projeto utiliza a biblioteca **pandas** para manipulação e análise de dados tabulares.
-
-Para adicionar novas dependências futuramente, utilize:
+Para adicionar novas bibliotecas ao projeto:
 
 ```powershell
 uv add nome-da-biblioteca
 ```
 
-## Executar o projeto de setup
+## Executar o script de teste
 
-Ainda dentro da pasta `setup`, execute:
+Para validar que o ambiente está funcional:
 
 ```powershell
 uv run python main.py

@@ -69,33 +69,44 @@ As configurações do ambiente ficam na pasta `setup/`.
 
 ## Primeiros passos
 
-Para preparar o ambiente, acesse a pasta `setup/` e sincronize as dependências:
+Para preparar o ambiente e rodar os notebooks sem atritos, siga o passo a passo abaixo:
+
+### 1. Sincronizar o ambiente com o `uv`
+
+Acesse a pasta `setup/` e execute o `uv sync`. Isso criará a `.venv` automaticamente com todas as bibliotecas necessárias (Pandas, PyArrow, ipykernel, nbstripout):
 
 ```powershell
 cd setup
 uv sync
 ```
 
-Depois, volte para a raiz do repositório e instale o filtro local do `nbstripout`:
+### 2. Registrar o Kernel do Jupyter
+
+Para que qualquer editor (VS Code, Cursor, Antigravity) reconheça o ambiente nos notebooks imediatamente:
+
+```powershell
+uv run python -m ipykernel install --user --name project_tasks_pandas --display-name "Python (project_tasks_pandas)"
+```
+
+### 3. Ativar o filtro do `nbstripout` no Git
+
+Volte para a raiz e registre o filtro para evitar commit acidental de saídas pesadas de notebooks:
 
 ```powershell
 cd ..
 uv --project setup run nbstripout --install
 ```
 
-Esse filtro remove automaticamente outputs, contadores de execução e metadados voláteis dos notebooks quando eles são adicionados ao Git. Assim, os commits ficam focados no código e nas explicações das células.
+---
 
-Esse passo precisa ser feito uma vez por clone local do repositório.
+## Como usar os Notebooks
 
-Para mais detalhes, consulte o arquivo [setup/README.md](setup/README.md).
+1. Abra qualquer notebook dentro da pasta `notebooks/` (por exemplo, `notebooks/tasks_explore_format_data.ipynb`).
+2. No canto superior direito do editor, clique em **Select Kernel** -> **Jupyter Kernel...**.
+3. Selecione o kernel **`Python (project_tasks_pandas)`**.
+4. Execute as células normalmente!
 
-## Como usar este repositório
-
-1. Prepare o ambiente Python seguindo as instruções da pasta `setup/`.
-2. Abra os notebooks no Jupyter, VS Code ou outro ambiente compatível.
-3. Execute as células na ordem.
-4. Leia as perguntas-guia antes de escrever ou alterar código.
-5. Use os exercícios do curso como prática e complemente com suas próprias análises.
+Para detalhes adicionais sobre o gerenciamento de dependências, consulte [setup/README.md](setup/README.md).
 
 ## Próximos passos
 
